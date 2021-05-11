@@ -17,6 +17,7 @@ mp_holistic = mp.solutions.holistic # Mediapipe Solutions
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
+fls = input('enter the video file name :')
 
 df = pd.read_csv('coords.csv')
 
@@ -63,16 +64,19 @@ with open('body_language.pkl', 'rb') as f:
 
 print(model)
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(fls)
 # Initiate holistic model
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
 
     while cap.isOpened():
         ret, frame = cap.read()
-
-        # Recolor Feed
-        image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        image.flags.writeable = False
+        
+        if ret: 
+            # Recolor Feed
+            image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            image.flags.writeable = False
+        else:
+            break
 
         # Make Detections
         results = holistic.process(image)
