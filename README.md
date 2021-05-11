@@ -1,3 +1,3 @@
 # ASL-alphabet-detection-and-recognition
-
-## python3 detect.py
+### To Run
+## $python3 detect.py
